@@ -11,17 +11,13 @@ function App() {
     <Grid templateAreas={{
         base: `"nav" "main"`,
         lg: `"nav nav" "aside main"`
-      }}>
+      }}
+      width={'100vw'}>
+      <GridItem area={'nav'}><NavBar/></GridItem>
       <Show above='lg'>
-        <GridItem area={'nav'} bg={'coral'}>Nav</GridItem>
-        <GridItem area={'nav'} bg={'coral'}>Nav</GridItem>
         <GridItem area={'aside'} bg={'blue'}>Aside</GridItem>
-        <GridItem area={'main'} bg={'black'}>Main</GridItem>
       </Show>
-      <Show above='base'>
-        <GridItem area={'nav'}><NavBar/></GridItem>
         <GridItem area={'main'} bg={'black'}>Main</GridItem>
-      </Show>
     </Grid>
   )
 }
