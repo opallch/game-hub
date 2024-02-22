@@ -13,5 +13,5 @@ const GameGrid = () => {
         </SimpleGrid>
         )
 }
- 
+
 export default GameGrid;
