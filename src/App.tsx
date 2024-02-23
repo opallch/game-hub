@@ -9,6 +9,7 @@ import './App.css'
 
 function App() {
   const [ selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+  const [ searchInput, setSearchInput] = useState<string>("");
   const { genres, error } = useGenres();
   
   // Grid object
@@ -19,11 +20,11 @@ function App() {
       }}
       gap={5}
       >
-      <GridItem area={'nav'}><NavBar/></GridItem>
+      <GridItem area={'nav'}><NavBar onSearch={setSearchInput}/></GridItem>
       <Show above='lg'>
         <GridItem area={'aside'}><GenreList genres={genres} onSelectGenre={setSelectedGenre}/></GridItem>
       </Show>
-        <GridItem area={'main'}><GameGrid selectedGenre={selectedGenre}/></GridItem>
+        <GridItem area={'main'}><GameGrid selectedGenre={selectedGenre} searchInput={searchInput}/></GridItem>
     </Grid>
   )
 }
