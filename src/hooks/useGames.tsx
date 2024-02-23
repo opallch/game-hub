@@ -18,7 +18,7 @@ export interface Game{
     genres: Genre[];
 }
 
-const useGames = (selectedGenre: Genre | null) => {
+const useGames = () => {
     const [games, setGames] = useState<Game[]>([]); // add an empty list as state
     const [error, setError] = useState("");
 
@@ -34,7 +34,7 @@ const useGames = (selectedGenre: Genre | null) => {
                     setError(err.message);
             });
             return cancel;
-        }, [selectedGenre])
+        }, [])
         
     return {games, error}
 }

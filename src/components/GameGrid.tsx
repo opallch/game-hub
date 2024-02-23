@@ -6,16 +6,23 @@ import { Genre } from '../hooks/useGenres';
 
 interface Props{
     selectedGenre: Genre | null;
+    searchInput: string
 }
 
-const GameGrid = ({ selectedGenre }: Props) => {
+const GameGrid = ({ selectedGenre, searchInput }: Props) => {
     const {games, error} = useGames();
     // TODO migrate filtering to useGames(selectedGenre)
-    const gamesByGenre = games.filter(
+    // first by genre
+    let filteredGames = games.filter(
         (game) => game.genres.map( (genre) => genre.name).includes(selectedGenre ? selectedGenre.name : ""));
+    // by search name
+    filteredGames = filteredGames.filter(
+        (game) => game.name.toLowerCase().includes(searchInput.toLowerCase()
+    ));
+
     return (
         <SimpleGrid columns={{sm: 1, md: 2, lg:3, xl:3}} spacing={10}>
-            {gamesByGenre.map((game) => (
+            {filteredGames.map((game) => (
                 <GameCard key={game.id} game={game}/>)
             )}
         </SimpleGrid>
