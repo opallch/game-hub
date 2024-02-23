@@ -13,6 +13,7 @@ export interface Game{
     name: string;
     background_image: string; // url
     parent_platforms: {platform: Platform}[];
+    rating: number;
 }
 
 const useGames = () => {
@@ -21,7 +22,6 @@ const useGames = () => {
     
     useEffect(
         () => {
-        const controller = new AbortController();
         const {request, cancel} =  gameService.getAll();
 
             request
