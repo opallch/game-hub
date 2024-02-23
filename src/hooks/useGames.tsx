@@ -1,15 +1,19 @@
 import React, {useEffect, useState } from 'react';
-import apiClient from '../services/api-client';
+import gameService from '../services/game-service'
 import { CanceledError } from 'axios';
 
-interface Game{
-    id: number;
-    name: string;
+export interface Platform{
+    id: number,
+    name: string,
+    slug: string
 }
 
-interface FetchGamesResponse{
-    count: number;
-    results: Game[];
+export interface Game{
+    id: number;
+    name: string;
+    background_image: string; // url
+    parent_platforms: {platform: Platform}[];
+    rating: number;
 }
 
 const useGames = () => {
@@ -18,16 +22,17 @@ const useGames = () => {
     
     useEffect(
         () => {
-        const controller = new AbortController();
-        apiClient.get<FetchGamesResponse>('/games')
-            .then(res => setGames(res.data.results)) // success 
-            .catch((err) => {
-                // CanceledError is raised when controller.abort() is called
-                if (err instanceof CanceledError) return; 
-                setError(err.message);
+        const {request, cancel} =  gameService.getAll();
+
+            request
+                .then(res => setGames(res.data.results)) // success 
+                .catch((err) => {
+                    // CanceledError is raised when controller.abort() is called
+                    if (err instanceof CanceledError) return; 
+                    setError(err.message);
             })        
         // clean-up: cancel all fetch request before unmounting
-        return () => controller.abort(); 
+        return cancel;
         }, [] // request will be sent constantly without deps
     )
     return {games, error}
