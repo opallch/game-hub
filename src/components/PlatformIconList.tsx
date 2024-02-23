@@ -14,7 +14,6 @@ import { BsGlobe } from 'react-icons/bs';
 import { HStack, Icon } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 import { Platform } from '../hooks/useGames';
-import { Text } from '@chakra-ui/react';
 
 interface Props{
     platforms: Platform[];
@@ -37,7 +36,7 @@ const PlatformIconList = ({platforms}: Props) => {
         <HStack justify={'left'} marginY={'5px'}>
         {platforms.map(
             (platform) => (
-                <Icon as={iconMap[platform.slug]} color={'#718096'}/>
+                <Icon key={platform.id} as={iconMap[platform.slug]} color={'#718096'}/>
         ))}
         </HStack>
     );
